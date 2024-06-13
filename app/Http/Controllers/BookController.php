@@ -11,10 +11,21 @@ class BookController extends Controller
 
     public function index()
     {
-    $books = Book::all();
-    //resources\views\books\index.blade.php
-    return view('books.index', ['books' => $books]);
+        $books = Book::all();
+        //resources\views\books\index.blade.php
+        return view('books.index', ['books' => $books]);
     }
+
+    public function create()
+    {
+        return view('books.create');
+    }
+
+    public function show()
+    {
+
+    }
+
 
     public function store(Request $request)
     {
@@ -26,7 +37,7 @@ class BookController extends Controller
         ]);
         Book::create($request->all());
 
-        return redirect()->route('index');
+        return redirect()->route('books.index');
     }
 
 }

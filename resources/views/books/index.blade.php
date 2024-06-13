@@ -1,62 +1,68 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Selfwork 008</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body>
-    <ul>
-      @forelse($books as $book)
-        <li>{{$book->title}} - {{$book->year ?? 'data ignota'}}</li>
-      @empty
-        Nessun libro trovato
-      @endforelse
-    </ul>
+<x-main>
 
-    <form class='container' method="POST" action="{{route('store')}}">
-      @csrf
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Titolo</label>
-        <input type="text" name="title" class="form-control" value="{{old('title')}}">
-        @error('title')
-          {{$message}}
-        @enderror
-        
+  <div class="rounded-3 py-5 px-4 px-md-5 mb-5">
+
+      <div class="container mt-5">
+          <div
+              class="align-middle gap-2 d-flex justify-content-between">
+              <h3>Elenco Libri inseriti</h3>
+              <form class="d-flex" role="search" action="#"
+                  method="POST">
+                  <input class="form-control me-2" name="search"
+                      type="search" placeholder="Cerca Articolo"
+                      aria-label="Search">
+              </form>
+              <a href="{{route('books.create')}}" type="button"
+                  class="btn btn btn-success me-md-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#formModalArticle">
+                  Crea Nuovo Libro
+              </a>
+          </div>
+          <table class="table border mt-2">
+              <thead>
+                  <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Titolo</th>
+                      <th scope="col">Titolo</th>
+                      <th scope="col"></th>
+                  </tr>
+              </thead>
+              <tbody>
+                @forelse($books as $book)
+
+
+                  <tr>
+                      <th scope="row">{{$book->id}}</th>
+                      {{-- <td>
+                          <img class="card-img-top" style="width:3rem"
+                              src="https://images.freeimages.com/images/large-previews/83c/barn-silo-detail-5-1210478.jpg"
+                              alt="..." />
+                      </td> --}}
+                      <td>{{$book->title}}</td>
+                      <td>
+
+                          <div
+                              class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+                              <a href="#"
+                                  class="btn btn-primary me-md-2">
+                                  Visualizza
+                              </a>
+                              <a href="#"
+                                  class="btn btn-warning me-md-2">
+                                  Modifica
+                              </a>
+                              <button type="button"
+                                  class="btn btn-danger me-md-2">Elimina</button>
+                          </div>
+                      </td>
+                  </tr>
+                  @empty
+                  @endforelse
+              </tbody>
+          </table>
       </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Anno</label>
-        <input type="text" name="year" class="form-control" value="{{old('year')}}">
-        @error('year')
-          {{$message}}
-        @enderror
-        
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Pagine</label>
-        <input type="text" name="pages" class="form-control" value="{{old('pages')}}">
-        @error('pages')
-          {{$message}}
-        @enderror
-        
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Autore</label>
-        <input type="text" name="author" class="form-control" value="{{old('author')}}">
-        @error('author')
-          {{$message}}
-        @enderror
-        
-      </div>
+  </div>
 
-
-
-      <button type="submit" class="btn btn-primary">Salva</button>
-    </form>
-
-
-
-  </body>
-</html>
+</x-main>
